@@ -1,0 +1,89 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+
+import java.time.Duration;
+
+import static org.junit.Assert.assertEquals;
+
+public class MainPageObject {
+    private static String QuestionButtonLocator;
+
+    public MainPageObject (WebDriver driver) {
+        MainPageObject.driver = driver;
+    }
+
+    private static WebDriver driver;
+
+    // Локатор кнопки "Да все привыкли" в окне куки
+    private final By cookieButton = By.id("rcc-confirm-button");
+
+    // Локатор кнопки "Заказа" в шапке
+    private By headerOrderButton = By.className("Button_Button__ra12g");
+
+    // Локатор кнопки "Заказа" расположенной на сайте и выровнена по середине
+    private By middleOrderButton = By.className("Button_Button__ra12g Button_Middle__1CSJM");
+
+    // Локаторы кнопок с вопросами
+    private static final String[] DropDownQuestionsArray = new String[]{
+            "accordion__heading-0", "accordion__heading-1", "accordion__heading-2", "accordion__heading-3", "accordion__heading-4", "accordion__heading-5", "accordion__heading-6", "accordion__heading-7"};
+
+    // Локаторы кнопок панелей с текстом
+    private static final String[] DropDownAnswersArray = new String[]{
+            "accordion__panel-0", "accordion__panel-1", "accordion__panel-2", "accordion__panel-3", "accordion__panel-4", "accordion__panel-5", "accordion__panel-6", "accordion__panel-7"};
+
+    // Методы для работы с элементами с главной страницы
+    // Открытие сайта
+    public final MainPageObject openSite() {
+        driver.get("https://qa-scooter.praktikum-services.ru");
+        return this;
+    }
+    // Клик по кнопке "Да все привыкли" в окне куки
+    public MainPageObject clickCookieButton() {
+        driver.findElement(cookieButton).click();
+        return this;
+    }
+    // Локатор кнопки "Заказа" в шапке
+    public MainPageObject clickHeaderOrderButton() {
+        driver.findElement(headerOrderButton).click();
+        return this;
+    }
+    // Клик по кнопке "Заказа" расположенной на сайте и выровнена по середине
+    public MainPageObject clickMiddleOrderButton() {
+        driver.findElement(middleOrderButton).click();
+        return this;
+    }
+
+    // Скролл главной страницы до конца
+    public MainPageObject scrollPageToEndOfList() {
+        WebElement lastQuestionArrow = driver.findElement(By.id(DropDownQuestionsArray[7]));
+        ((JavascriptExecutor) driver).executeScript ("arguments[0].scrollIntoView();", lastQuestionArrow);
+        return this;
+    }
+
+    // Клик по стрелке выпадающего списка "Вопросы о важном"
+    public static void clickQuestionArrow(int questionNumber) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.id(DropDownQuestionsArray[questionNumber])));
+        driver.findElement(By.id(DropDownQuestionsArray[questionNumber])).click();
+    }
+
+    // Проверка текста на орфографию и контекст
+    public static void checkTextInOpenPanel(String expectedText, int answerNumber) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.id(DropDownAnswersArray[answerNumber])));
+        String answerText = driver.findElement (By.id(DropDownAnswersArray[answerNumber])).getText();
+        assertEquals(expectedText, answerText);
+    }
+    // Клик по вопросы
+    public MainPageObject clickQuestionButtonNext (String questionButtonLocator) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.id(questionButtonLocator)));
+        driver.findElement(By.id(questionButtonLocator)).click();
+        return this;
+    }
+}
