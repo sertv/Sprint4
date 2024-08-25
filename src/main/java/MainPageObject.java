@@ -19,6 +19,9 @@ public class MainPageObject {
 
     private static WebDriver driver;
 
+    //Локатор кнопки "Cамокат"
+    private final By scooterButton = By.className("Header_LogoScooter__3lsAR");
+
     // Локатор кнопки "Да все привыкли" в окне куки
     private final By cookieButton = By.id("rcc-confirm-button");
 
