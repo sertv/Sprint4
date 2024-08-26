@@ -11,7 +11,6 @@ import java.time.Duration;
 import static org.junit.Assert.assertEquals;
 
 public class MainPageObject {
-    private static String QuestionButtonLocator;
 
     public MainPageObject (WebDriver driver) {
         MainPageObject.driver = driver;
@@ -32,11 +31,11 @@ public class MainPageObject {
     private By middleOrderButton = By.className("Button_Button__ra12g Button_Middle__1CSJM");
 
     // Локаторы кнопок с вопросами
-    private static final String[] DropDownQuestionsArray = new String[]{
+    private static final String[] dropDownQuestionsArray = new String[]{
             "accordion__heading-0", "accordion__heading-1", "accordion__heading-2", "accordion__heading-3", "accordion__heading-4", "accordion__heading-5", "accordion__heading-6", "accordion__heading-7"};
 
     // Локаторы кнопок панелей с текстом
-    private static final String[] DropDownAnswersArray = new String[]{
+    private static final String[] dropDownAnswersArray = new String[]{
             "accordion__panel-0", "accordion__panel-1", "accordion__panel-2", "accordion__panel-3", "accordion__panel-4", "accordion__panel-5", "accordion__panel-6", "accordion__panel-7"};
 
     // Методы для работы с элементами с главной страницы
@@ -63,7 +62,7 @@ public class MainPageObject {
 
     // Скролл главной страницы до конца
     public MainPageObject scrollPageToEndOfList() {
-        WebElement lastQuestionArrow = driver.findElement(By.id(DropDownQuestionsArray[7]));
+        WebElement lastQuestionArrow = driver.findElement(By.id(dropDownQuestionsArray[7]));
         ((JavascriptExecutor) driver).executeScript ("arguments[0].scrollIntoView();", lastQuestionArrow);
         return this;
     }
@@ -71,15 +70,15 @@ public class MainPageObject {
     // Клик по стрелке выпадающего списка "Вопросы о важном"
     public static void clickQuestionArrow(int questionNumber) {
         new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(By.id(DropDownQuestionsArray[questionNumber])));
-        driver.findElement(By.id(DropDownQuestionsArray[questionNumber])).click();
+                .until(ExpectedConditions.elementToBeClickable(By.id(dropDownQuestionsArray[questionNumber])));
+        driver.findElement(By.id(dropDownQuestionsArray[questionNumber])).click();
     }
 
     // Проверка текста на орфографию и контекст
     public static void checkTextInOpenPanel(String expectedText, int answerNumber) {
         new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.id(DropDownAnswersArray[answerNumber])));
-        String answerText = driver.findElement (By.id(DropDownAnswersArray[answerNumber])).getText();
+                .until(ExpectedConditions.visibilityOfElementLocated(By.id(dropDownAnswersArray[answerNumber])));
+        String answerText = driver.findElement (By.id(dropDownAnswersArray[answerNumber])).getText();
         assertEquals(expectedText, answerText);
     }
     // Клик по вопросы
