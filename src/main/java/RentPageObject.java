@@ -4,11 +4,13 @@ import org.openqa.selenium.*;
 public class RentPageObject {
 
     WebDriver driver;
+    //Констурктор класса
+    public RentPageObject (WebDriver driver) {
+        this.driver = driver;
+    }
     //Локатор для поля Когда привезти самокат
-    private final By rentalDateField = By.xpath(".//input[@placeholder='Когда привезти самокат']");
+    private final By rentalDateField = By.xpath("//input[@type='text' and @placeholder='* Когда привезти самокат']");
 
-    //Локатор для поля Когда привезти самокат - выбор даты (дата 1-ое число)
-    private final By rentalDateFieldDate = By.className("react-datepicker__day react-datepicker__day--001 react-datepicker__day--weekend react-datepicker__day--outside-month");
 
     // Локатор для поля "Аренды"
     private final By rentalTimeField = By.className("Dropdown-placeholder");
@@ -35,22 +37,18 @@ public class RentPageObject {
     private final By orderButtonYes = By.xpath(".//*[@id='root']/div/div[2]/div[5]/div[2]/button[2]");
 
     // Окно "Заказ оформлен"
-    public boolean isModalOrderWindowDisplayed() {
+    public boolean orderAcceptance() {
+        driver.findElement(By.cssSelector("Button_Button__ra12g.Button_Middle__1CSJM"));
         return driver.findElement(orderButtonYes).isDisplayed();
     }
-    // Конструктор класса
-    public RentPageObject (WebDriver driver) {
-        this.driver = driver;
-    }
     // Выбор даты доставки
-    public RentPageObject sendRentalDate(String date) {
+    public RentPageObject rentalDate(String date) {
         driver.findElement(rentalDateField).sendKeys(date);
         driver.findElement(rentalDateField).sendKeys(Keys.ENTER);
         return this;
     }
-
     // Выбор срока аренды самоката
-    public RentPageObject setRentalTime() {
+    public RentPageObject rentalTime() {
         driver.findElement(rentalTimeField).click();
         driver.findElement(rentalTime).click();
         return this;

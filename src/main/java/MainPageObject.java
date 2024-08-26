@@ -28,27 +28,16 @@ public class MainPageObject {
     private By headerOrderButton = By.className("Button_Button__ra12g");
 
     // Локатор кнопки "Заказа" расположенной на сайте и выровнена по середине
-    private By middleOrderButton = By.className("Button_Button__ra12g Button_Middle__1CSJM");
+    private By middleOrderButton = By.cssSelector("Button_Button__ra12g.Button_UltraBig__UU3Lp");
 
     // Локаторы кнопок с вопросами
-    private static final String[] dropDownQuestionsArray = new String[]{
+     static final String[] dropDownQuestionsArray = new String[]{
             "accordion__heading-0", "accordion__heading-1", "accordion__heading-2", "accordion__heading-3", "accordion__heading-4", "accordion__heading-5", "accordion__heading-6", "accordion__heading-7"};
 
     // Локаторы кнопок панелей с текстом
     private static final String[] dropDownAnswersArray = new String[]{
             "accordion__panel-0", "accordion__panel-1", "accordion__panel-2", "accordion__panel-3", "accordion__panel-4", "accordion__panel-5", "accordion__panel-6", "accordion__panel-7"};
 
-    // Методы для работы с элементами с главной страницы
-    // Открытие сайта
-    public final MainPageObject openSite() {
-        driver.get("https://qa-scooter.praktikum-services.ru");
-        return this;
-    }
-    // Клик по кнопке "Да все привыкли" в окне куки
-    public MainPageObject clickCookieButton() {
-        driver.findElement(cookieButton).click();
-        return this;
-    }
     // Локатор кнопки "Заказа" в шапке
     public MainPageObject clickHeaderOrderButton() {
         driver.findElement(headerOrderButton).click();
@@ -81,7 +70,7 @@ public class MainPageObject {
         String answerText = driver.findElement (By.id(dropDownAnswersArray[answerNumber])).getText();
         assertEquals(expectedText, answerText);
     }
-    // Клик по вопросы
+    // Клик по вопросам
     public MainPageObject clickQuestionButtonNext (String questionButtonLocator) {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.elementToBeClickable(By.id(questionButtonLocator)));
