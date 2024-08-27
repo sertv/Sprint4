@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,8 +17,13 @@ public class OrderSamokat  {
 
     @Before
     public void startUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+//        WebDriverManager.chromedriver().setup();
+//        driver = new ChromeDriver();
+
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+
     }
     // Заказ самоката, через расположенную кнопка в шапке
     @Test
@@ -47,9 +54,10 @@ public class OrderSamokat  {
     }
     // Заказ самоката, расположенная кнопка по середине страницы
     @Test
-    public void samokatOrderMiddleOrderButton() {
+    public void samokatOrderMiddleOrderButton() throws InterruptedException {
         driver.get("https://qa-scooter.praktikum-services.ru/");
         MainPageObject objectOrder = new MainPageObject(driver);
+        objectOrder.scrollPageToEndOfList();
         objectOrder.clickMiddleOrderButton();
         OrderPageObject objectSamokatOrder = new OrderPageObject(driver);
         objectSamokatOrder.sendFirstName("Сергей");

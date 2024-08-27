@@ -34,12 +34,16 @@ public class RentPageObject {
     private final By orderButtonNo = By.xpath(".//button[(@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Заказать')]");
 
     // Локатор кнопки "ДА" в окне "Хотите оформить заказ?"
-    private final By orderButtonYes = By.xpath(".//*[@id='root']/div/div[2]/div[5]/div[2]/button[2]");
+    private final By orderButtonYes = By.xpath("//button[text()='Да' and contains(@class, 'Button_Button__ra12g') and contains(@class, 'Button_Middle__1CSJM')]");
+
+    // Локатор кнопки "Статус" в окне "Хотите оформить заказ?"
+    private final By orderButtonStatus = By.xpath("//button[contains(@class, 'Button_Button__ra12g') and contains(@class, 'Button_Middle__1CSJM')]");
 
     // Окно "Заказ оформлен"
     public boolean orderAcceptance() {
-        driver.findElement(By.cssSelector("Button_Button__ra12g.Button_Middle__1CSJM"));
-        return driver.findElement(orderButtonYes).isDisplayed();
+        driver.findElement(By.xpath("//button[contains(@class, 'Button_Button__ra12g') and contains(@class, 'Button_Middle__1CSJM')]"));
+
+        return driver.findElement(orderButtonStatus).isDisplayed();
     }
     // Выбор даты доставки
     public RentPageObject rentalDate(String date) {

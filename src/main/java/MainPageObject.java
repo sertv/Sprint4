@@ -28,7 +28,7 @@ public class MainPageObject {
     private By headerOrderButton = By.className("Button_Button__ra12g");
 
     // Локатор кнопки "Заказа" расположенной на сайте и выровнена по середине
-    private By middleOrderButton = By.cssSelector("Button_Button__ra12g.Button_UltraBig__UU3Lp");
+    private By middleOrderButton = By.xpath("//button[text()='Заказать' and contains(@class, 'Button_Button__ra12g') and contains(@class, 'Button_UltraBig__UU3Lp')]\n");
 
     // Локаторы кнопок с вопросами
      static final String[] dropDownQuestionsArray = new String[]{
